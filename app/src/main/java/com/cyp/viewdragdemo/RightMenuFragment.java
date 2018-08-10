@@ -15,7 +15,7 @@ import android.widget.TextView;
 /**
  * Created by Administrator on 6/7 0007.
  */
-public class LeftMenuFragment extends Fragment {
+public class RightMenuFragment extends Fragment {
 
     private ListView lv;
     private Context mContext;

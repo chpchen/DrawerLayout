@@ -9,50 +9,58 @@ import android.widget.TextView;
 
 import com.cyp.viewdragdemo.app.DrawerLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DrawerLayout.OnCloseListener {
 
-    private LeftMenuFragment mLeftMenuFragment;
+    private RightMenuFragment mLeftMenuFragment;
+    private Button openDrawerLayout_btn;
+
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         FragmentManager fm = getSupportFragmentManager();
-        mLeftMenuFragment = (LeftMenuFragment) fm.findFragmentById(R.id.id_container_menu);
+        mLeftMenuFragment = (RightMenuFragment) fm.findFragmentById(R.id.id_container_menu);
         if (mLeftMenuFragment == null) {
-            fm.beginTransaction().add(R.id.id_container_menu, mLeftMenuFragment = new LeftMenuFragment())
+            fm.beginTransaction().add(R.id.id_container_menu, mLeftMenuFragment = new RightMenuFragment())
                     .commit();
         }
 
         TextView id_content_tv = (TextView) findViewById(R.id.id_content_tv);
-        final Button id_content_btn = (Button) findViewById(R.id.id_content_btn);
+        openDrawerLayout_btn = (Button) findViewById(R.id.id_content_btn);
 
-        final DrawerLayout vdhtest = (DrawerLayout) findViewById(R.id.vdhtest);
+        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.vdhtest);
+        drawerLayout.setOnCloseListener(this);
         if (id_content_tv != null) {
             id_content_tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    if (!vdhtest.isShown()) {
-                    vdhtest.openDrawer();
-//                    }
+                    drawerLayout.openDrawer();
                 }
             });
         }
-        if (id_content_btn != null) {
-            id_content_btn.setOnClickListener(new View.OnClickListener() {
+        if (openDrawerLayout_btn != null) {
+            openDrawerLayout_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!vdhtest.isShown()) {
-                        vdhtest.openDrawer();
-                        id_content_btn.setText("关闭");
+                    if (!drawerLayout.isShown()) {
+                        drawerLayout.openDrawer();
+                        openDrawerLayout_btn.setText("关闭");
                     } else {
-                        vdhtest.closeDrawer();
-                        id_content_btn.setText("打开");
+                        drawerLayout.closeDrawer();
+                        openDrawerLayout_btn.setText("打开");
                     }
 
                 }
             });
         }
+    }
+
+    @Override
+    public void onClose() {
+        //侧滑关闭回调事件
+        openDrawerLayout_btn.setText("打开");
     }
 }
