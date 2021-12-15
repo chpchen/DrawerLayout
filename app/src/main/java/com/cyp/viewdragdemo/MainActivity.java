@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements DrawerLayout.OnCl
                 @Override
                 public void onClick(View v) {
                     drawerLayout.openDrawer();
+                    Log.i("ddd","ddd");
                 }
             });
         }
